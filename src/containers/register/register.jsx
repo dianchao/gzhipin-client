@@ -21,6 +21,7 @@ import Logo from '../../components/logo/logo'
 const ListItem = List.Item
 
 class Register extends Component {
+  //搜集数据
   state = {
     username: '',  // 用户名
     password: '',  // 密码

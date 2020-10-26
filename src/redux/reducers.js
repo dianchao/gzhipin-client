@@ -1,7 +1,7 @@
 /*
 包含n个reducer函数: 根据老的state和指定的action返回一个新的state
  */
-import {combineReducers} from 'redux'
+import { combineReducers } from 'redux'
 
 import {
   AUTH_SUCCESS,
@@ -14,7 +14,7 @@ import {
   MSG_READ
 } from './action-types'
 
-import {getRedirectTo} from '../utils'
+import { getRedirectTo } from '../utils'
 
 const initUser = {
   username: '', // 用户名
@@ -23,26 +23,38 @@ const initUser = {
   redirectTo: '' // 需要自动重定向的路由路径
 }
 // 产生user状态的reducer
-function user(state=initUser, action) {
+function user(state = initUser, action) {
   switch (action.type) {
     case AUTH_SUCCESS: // data是user
-      const {type, header} = action.data
-      return {...action.data, redirectTo: getRedirectTo(type, header)}
+      const { type, header } = action.data
+      return { ...action.data, redirectTo: getRedirectTo(type, header) }
     case ERROR_MSG: // data是msg
-      return {...state, msg: action.data}
+      return { ...state, msg: action.data }
     case RECEIVE_USER: // data是user
       return action.data
     case RESET_USER: // data是msg
-      return {...initUser, msg: action.data}
+      return { ...initUser, msg: action.data }
     default:
       return state
   }
 }
 
+//AUTH_SUCCESS四种跳转路由情况
+/*
+用户主界面路由
+  dashen：/dashen
+  laoban：/laoban
+用户信息完善页面路由
+  dashen：/dasheninfo
+  laoban：/laobaninfo
+
+判断是否已经完善信息？user.header是否有值
+判断用户类型？user.type的值
+*/
 
 const initUserList = []
 // 产生userlist状态的reducer
-function userList(state=initUserList, action) {
+function userList(state = initUserList, action) {
   switch (action.type) {
     case RECEIVE_USER_LIST:  // data为userList
       return action.data
@@ -58,39 +70,39 @@ const initChat = {
 }
 
 // 产生聊天状态的reducer
-function chat(state=initChat, action) {
+function chat(state = initChat, action) {
   switch (action.type) {
     case RECEIVE_MSG_LIST:  // data: {users, chatMsgs}
-      const {users, chatMsgs, userid} = action.data
+      const { users, chatMsgs, userid } = action.data
       return {
         users,
         chatMsgs,
-        unReadCount: chatMsgs.reduce((preTotal, msg) => preTotal+(!msg.read&&msg.to===userid?1:0),0)
+        unReadCount: chatMsgs.reduce((preTotal, msg) => preTotal + (!msg.read && msg.to === userid ? 1 : 0), 0)
       }
     case RECEIVE_MSG: // data: chatMsg
-      const {chatMsg} = action.data
+      const { chatMsg } = action.data
       return {
         users: state.users,
         chatMsgs: [...state.chatMsgs, chatMsg],
-        unReadCount: state.unReadCount + (!chatMsg.read&&chatMsg.to===action.data.userid?1:0)
+        unReadCount: state.unReadCount + (!chatMsg.read && chatMsg.to === action.data.userid ? 1 : 0)
       }
     case MSG_READ:
-      const {from, to, count} = action.data
+      const { from, to, count } = action.data
       state.chatMsgs.forEach(msg => {
-        if(msg.from===from && msg.to===to && !msg.read) {
+        if (msg.from === from && msg.to === to && !msg.read) {
           msg.read = true
         }
       })
       return {
         users: state.users,
         chatMsgs: state.chatMsgs.map(msg => {
-          if(msg.from===from && msg.to===to && !msg.read) { // 需要更新
-            return {...msg, read: true}
+          if (msg.from === from && msg.to === to && !msg.read) { // 需要更新
+            return { ...msg, read: true }
           } else {// 不需要
             return msg
           }
         }),
-        unReadCount: state.unReadCount-count
+        unReadCount: state.unReadCount - count
       }
     default:
       return state

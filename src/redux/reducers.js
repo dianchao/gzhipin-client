@@ -22,11 +22,13 @@ const initUser = {
   msg: '', // 错误提示信息
   redirectTo: '' // 需要自动重定向的路由路径
 }
+
 // 产生user状态的reducer
 function user(state = initUser, action) {
   switch (action.type) {
     case AUTH_SUCCESS: // data是user
       const { type, header } = action.data
+      // return { ...action.data, redirectTo: "/" }
       return { ...action.data, redirectTo: getRedirectTo(type, header) }
     case ERROR_MSG: // data是msg
       return { ...state, msg: action.data }
@@ -39,20 +41,8 @@ function user(state = initUser, action) {
   }
 }
 
-//AUTH_SUCCESS四种跳转路由情况
-/*
-用户主界面路由
-  dashen：/dashen
-  laoban：/laoban
-用户信息完善页面路由
-  dashen：/dasheninfo
-  laoban：/laobaninfo
-
-判断是否已经完善信息？user.header是否有值
-判断用户类型？user.type的值
-*/
-
 const initUserList = []
+
 // 产生userlist状态的reducer
 function userList(state = initUserList, action) {
   switch (action.type) {

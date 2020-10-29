@@ -49,8 +49,10 @@ class Register extends Component {
 
   render() {
     const {type} = this.state
+
+    // 点击注册按钮后，根据注册动作后的状态，决定该跳转到哪个页面。
     const {msg, redirectTo} = this.props.user
-    // 如果redirectTo有值, 就需要重定向到指定的路由
+    // 如果redirectTo有值, 就需要重定向到指定的路由，跳转到/laobaninfo或/dasheninfo
     if(redirectTo) {
       return <Redirect to={redirectTo}/>
     }

@@ -68,13 +68,14 @@ class Main extends Component {
   }
 
   render() {
-
+    // 场景：用户注册后，完善信息时，cookie失效，此时提交保存要求跳转到登录页面。
     // 读取cookie中的userid
     const userid = Cookies.get('userid')
     // 如果没有, 自动重定向到登陆界面
     if(!userid) {
       return <Redirect to='/login'/>
     }
+
     // 如果有,读取redux中的user状态
     const {user, unReadCount} = this.props
     // 如果user有没有_id, 返回null(不做任何显示)

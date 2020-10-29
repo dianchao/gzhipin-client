@@ -44,7 +44,7 @@ class Login extends Component {
   }
 
   render() {
-
+    // 点击登录按钮后，根据登录动作后的状态，决定跳转页面。
     const {msg, redirectTo} = this.props.user
     // 如果redirectTo有值, 就需要重定向到指定的路由
     if(redirectTo) {

@@ -84,7 +84,7 @@ export const readMsg = (from, to) => {
 
 
 
-
+// 每一个actionType都会对应一个同步action
 // 授权成功的同步action
 const authSuccess = (user) => ({ type: AUTH_SUCCESS, data: user })
 // 错误提示信息的同步action

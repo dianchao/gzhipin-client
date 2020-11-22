@@ -8,7 +8,8 @@
 用户信息完善界面路由
   dashen: /dasheninfo
   laoban: /laobaninfo
-判断是否已经完善信息? user.header是否有值
+  
+判断是否已经完善信息: user.header是否有值
 判断用户类型: user.type
  */
 /*

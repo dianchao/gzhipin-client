@@ -7,7 +7,7 @@ import { List, Grid } from 'antd-mobile'
 import PropTypes from 'prop-types' //prop代表父组件传递过来的值 types代表类型。简单来说就是用来校验父组件传递过来值的类型
 
 export default class HeaderSelector extends Component {
-
+  //属性声明
   static propTypes = {
     setHeader: PropTypes.func.isRequired
   }

@@ -10,6 +10,7 @@ const Header = Card.Header
 const Body = Card.Body
 
 class UserList extends Component {
+  //属性声明
   static propTypes = {
     userList: PropTypes.array.isRequired
   }

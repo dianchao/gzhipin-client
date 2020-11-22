@@ -1,5 +1,5 @@
 /*
-包含n个reducer函数: 根据老的state和指定的action返回一个新的state
+reducer：包含n个reducer函数，根据老的state和指定的action返回一个新的state
  */
 import { combineReducers } from 'redux'
 
@@ -100,9 +100,9 @@ function chat(state = initChat, action) {
 }
 
 export default combineReducers({
-  user,
+  user, //指定reducer对应的属性
   userList,
   chat
 })
-// 向外暴露的状态的结构: {user: {}, userList: [], chat: {}}
+// 向外暴露的state结构: {user: {}, userList: [], chat: {}}
 

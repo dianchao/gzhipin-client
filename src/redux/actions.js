@@ -82,9 +82,7 @@ export const readMsg = (from, to) => {
 }
 
 
-
-
-// 每一个actionType都会对应一个同步action
+// 创建Action的工厂函数
 // 授权成功的同步action
 const authSuccess = (user) => ({ type: AUTH_SUCCESS, data: user })
 // 错误提示信息的同步action
@@ -111,7 +109,9 @@ export const register = (user) => {
   } else if (password !== password2) {
     return errorMsg('2次密码要一致!')
   }
+
   // 表单数据合法, 返回一个发ajax请求的异步action函数
+  // 注意：返回的是一个函数
   return async dispatch => {
     // 发送注册的异步ajax请求
     /*
@@ -136,7 +136,6 @@ export const register = (user) => {
 
 // 登陆异步action
 export const login = (user) => {
-
   const { username, password } = user
   // 做表单的前台检查, 如果不通过, 返回一个errorMsg的同步action
   if (!username) {
@@ -151,6 +150,7 @@ export const login = (user) => {
     promise.then(response => {
       const result = response.data  // {code: 0/1, data: user, msg: ''}
     })*/
+    // 在异步action中发送请求，请求获取到数据后需要响应数据分发同步action，分发同步action产生一个新状态
     const response = await reqLogin(user)
     const result = response.data
     if (result.code === 0) {// 成功
